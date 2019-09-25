@@ -1,2 +1,2 @@
 Demo:
-    /detected_objects -> /cmd velocity
+    /detected_objects -> /cmd_vel
