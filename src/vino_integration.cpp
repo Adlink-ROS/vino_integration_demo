@@ -22,10 +22,7 @@
 #include "rcutils/cmdline_parser.h"
 
 #include "geometry_msgs/msg/twist.hpp"
-
-#include "dynamic_vino_lib/inferences/object_detection.hpp"
-#include "dynamic_vino_lib/outputs/base_output.hpp"
-#include "dynamic_vino_lib/slog.hpp"
+#include "object_msgs/msg/objects_in_boxes.hpp"
 
 enum ACTION
 {
@@ -33,17 +30,11 @@ enum ACTION
     CMD_ROTATE_LEFT,
 };
 
-std::map<std::string, int> obj2act =
-{
-    { "person", CMD_ROTATE_RIGHT },
-    { "chair", CMD_ROTATE_LEFT }
-};
-
-class Intergrater : public rclcpp::Node
+class Integrator : public rclcpp::Node
 {
 public:
-  explicit Intergrater(const std::string & topic_name)
-  : Node("integrater")
+  explicit Integrator(const std::string & topic_name)
+  : Node("integrator")
   {
     // Create a callback function for when messages are received.
     // Variations of this function also exist using, for example UniquePtr for zero-copy transport.
@@ -53,7 +44,7 @@ public:
         int cnt = 0;
         for(auto & obj : msg->objects_vector)
         {
-            std::cout << "["<< ++cnt <<"] I see a: " << obj.object.object_name.c_str() << std::endl;
+            std::cout << "["<< ++cnt <<"] I see a '" << obj.object.object_name << "'." << std::endl;
             obj_2_cmdvel(obj.object.object_name);
         }
       };
@@ -69,7 +60,7 @@ public:
     auto topic_cmd_vel = std::string("/cmd_vel");
     rclcpp::QoS qos(rclcpp::KeepLast(7));
     pub_ = this->create_publisher<geometry_msgs::msg::Twist>(topic_cmd_vel, qos);
-
+    std::cout << "pub topic: " << topic_cmd_vel << std::endl;
   }
   void to_publish(geometry_msgs::msg::Twist cmd_vel)
   {
@@ -82,7 +73,7 @@ public:
   void pub_cmdvel(int idx)
   {
     geometry_msgs::msg::Twist cmd_vel;
-    std::cout << __func__<<":"<< __LINE__ <<" cmd_idx = "<< idx << std::endl;
+    //std::cout << __func__<<":"<< __LINE__ <<" cmd_idx = "<< idx << std::endl;
     switch(idx) {
        case CMD_ROTATE_RIGHT:
             cmd_vel.linear.x = 0;
@@ -91,7 +82,8 @@ public:
             cmd_vel.angular.x = 0;
             cmd_vel.angular.y = 0;
             cmd_vel.angular.z = -1;
-            std::cout << __func__<<":"<< __LINE__ << " Turn right !." << std::endl;
+            //std::cout << __func__<<":"<< __LINE__; 
+            std::cout << " Turn right !." << std::endl;
            break;
         case CMD_ROTATE_LEFT:
             cmd_vel.linear.x = 0;
@@ -100,7 +92,8 @@ public:
             cmd_vel.angular.x = 0;
             cmd_vel.angular.y = 0;
             cmd_vel.angular.z = 1;
-            std::cout << __func__<<":"<< __LINE__ << " Turn right !." << std::endl;
+            //std::cout << __func__<<":"<< __LINE__;
+            std::cout << " Turn left !." << std::endl;
             break;
         default:
             cmd_vel.linear.x = 0;
@@ -109,7 +102,8 @@ public:
             cmd_vel.angular.x = 0;
             cmd_vel.angular.y = 0;
             cmd_vel.angular.z = 0;
-            std::cout << __func__<<":"<< __LINE__ << " Stop !." << std::endl;
+            //std::cout << __func__<<":"<< __LINE__;
+            std::cout << " Stop !." << std::endl;
             break;
 
     }
@@ -124,12 +118,19 @@ public:
       {
         pub_cmdvel(obj2act[obj_name]);
       }
+      else
+        pub_cmdvel(-1);
   }
+
 private:
   rclcpp::Subscription<object_msgs::msg::ObjectsInBoxes>::SharedPtr sub_;
   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr pub_;
+  std::map<std::string, int> obj2act =
+  {
+      { "person", CMD_ROTATE_RIGHT },
+      { "chair",  CMD_ROTATE_LEFT }
+  };
 };
-
 
 int main(int argc, char *argv[])
 {
@@ -142,7 +143,7 @@ int main(int argc, char *argv[])
     }
 
     // Create a node.
-    auto node = std::make_shared<Intergrater>(topic);
+    auto node = std::make_shared<Integrator>(topic);
     rclcpp::spin(node);
     std::cout << "shutdown!" << std::endl;
     rclcpp::shutdown();
