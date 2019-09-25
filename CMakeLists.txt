@@ -19,6 +19,7 @@ find_package(std_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(object_msgs REQUIRED)
 find_package(people_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
 find_package(dynamic_vino_lib REQUIRED)
 find_package(InferenceEngine 1.1 REQUIRED)
 # Find OpenCV libray if exists
