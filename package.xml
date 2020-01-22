@@ -23,6 +23,7 @@
    <exec_depend>rmw</exec_depend>
    <exec_depend>std_msgs</exec_depend>
    <exec_depend>dynamic_vino_lib</exec_depend>
+   <exec_depend>neuronbot2_bringup</exec_depend>
 
    <export>
       <build_type>ament_cmake</build_type>

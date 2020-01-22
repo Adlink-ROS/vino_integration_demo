@@ -17,6 +17,7 @@ find_package(rcutils)
 find_package(rmw REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(object_msgs REQUIRED)
+find_package(people_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 
 #install(DIRECTORY launch DESTINATION share/${PROJRCT_NAME})
@@ -26,7 +27,18 @@ ament_target_dependencies(vino_integration
     "rclcpp"
     "std_msgs"
     "object_msgs")
-  install(TARGETS vino_integration
+
+add_executable(vino_integration_emotion src/vino_integration_emotion.cpp)
+ament_target_dependencies(vino_integration_emotion
+    "rclcpp"
+    "std_msgs"
+    "people_msgs")
+install(TARGETS vino_integration vino_integration_emotion
     DESTINATION lib/${PROJECT_NAME})
+
+install(
+  DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME}
+)
 
 ament_package()
