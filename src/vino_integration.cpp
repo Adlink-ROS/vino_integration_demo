@@ -81,7 +81,7 @@ public:
             cmd_vel.linear.z = 0;
             cmd_vel.angular.x = 0;
             cmd_vel.angular.y = 0;
-            cmd_vel.angular.z = -1;
+            cmd_vel.angular.z = -0.3;
             //std::cout << __func__<<":"<< __LINE__; 
             std::cout << " Turn right !." << std::endl;
            break;
@@ -91,7 +91,7 @@ public:
             cmd_vel.linear.z = 0;
             cmd_vel.angular.x = 0;
             cmd_vel.angular.y = 0;
-            cmd_vel.angular.z = 1;
+            cmd_vel.angular.z = 0.3;
             //std::cout << __func__<<":"<< __LINE__;
             std::cout << " Turn left !." << std::endl;
             break;
