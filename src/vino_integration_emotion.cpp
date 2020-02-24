@@ -17,13 +17,13 @@
 #include <string>
 #include <utility>
 #include <map>
-#include <chrono>
+#include <chrono>  // add timer library
 
 #include "rclcpp/rclcpp.hpp"
 #include "rcutils/cmdline_parser.h"
 
 #include "geometry_msgs/msg/twist.hpp"
-#include "people_msgs/msg/emotions_stamped.hpp"
+#include "people_msgs/msg/emotions_stamped.hpp"  // change msg type
 
 using namespace std::chrono_literals;
 using duration = std::chrono::nanoseconds;
@@ -32,8 +32,8 @@ enum ACTION
 {
     CMD_ROTATE_RIGHT,
     CMD_ROTATE_LEFT,
-    CMD_FORWARD,
-    CMD_BACKWARD,
+    CMD_FORWARD,    // add new action
+    CMD_BACKWARD,   // add new action
 };
 
 class Integrator : public rclcpp::Node
@@ -58,7 +58,7 @@ public:
     // Create a subscription to the topic which can be matched with one or more compatible ROS
     // publishers.
     // Note that not all publishers on the same topic with the same type will be compatible:
-    // they must have compatible Quality oCMD_ROTATE_RIGHTf Service policies.
+    // they must have compatible Quality of Service policies.
     sub_ = create_subscription<people_msgs::msg::EmotionsStamped>(topic_name, 1, callback);
     std::cout << "sub topic: " << topic_name << std::endl;
 
@@ -142,24 +142,26 @@ public:
       auto relation = obj2act.find(obj_name);
       if(relation != obj2act.end())
       {
-	  switch(obj2act[obj_name]) {
-		case 0 :
-			pub_cmdvel(CMD_ROTATE_RIGHT);
-			rclcpp::sleep_for(500ms);
-			pub_cmdvel(CMD_ROTATE_LEFT);
-			rclcpp::sleep_for(500ms);
-			pub_cmdvel(-1);
-			break;
-		case 1 :
-			pub_cmdvel(CMD_FORWARD);
-			rclcpp::sleep_for(500ms);
-			pub_cmdvel(CMD_BACKWARD);
-			rclcpp::sleep_for(500ms);
-			pub_cmdvel(-1);
-			break;
-		default:
-			pub_cmdvel(-1);
-			break;
+	      switch(obj2act[obj_name]) {
+	    	case 0 :
+        // turning around while seeing happy face
+	    		pub_cmdvel(CMD_ROTATE_RIGHT);
+	    		rclcpp::sleep_for(500ms);
+	    		pub_cmdvel(CMD_ROTATE_LEFT);
+	    		rclcpp::sleep_for(500ms);
+	    		pub_cmdvel(-1);
+	    		break;
+	    	case 1 :
+        // going forward and backward while seeing sad face
+	    		pub_cmdvel(CMD_FORWARD);
+	    		rclcpp::sleep_for(500ms);
+	    		pub_cmdvel(CMD_BACKWARD);
+	    		rclcpp::sleep_for(500ms);
+	    		pub_cmdvel(-1);
+	    		break;
+	    	default:
+	    		pub_cmdvel(-1);
+	    		break;
 	      }
       }
       else
