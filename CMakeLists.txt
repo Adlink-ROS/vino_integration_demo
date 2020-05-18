@@ -26,7 +26,15 @@ ament_target_dependencies(vino_integration
     "rclcpp"
     "std_msgs"
     "object_msgs")
-  install(TARGETS vino_integration
-    DESTINATION lib/${PROJECT_NAME})
+
+add_executable(vino_transform src/vino_transform.cpp)
+ament_target_dependencies(vino_transform
+    "rclcpp"
+    "std_msgs"
+    "object_msgs")
+
+install(TARGETS vino_integration
+                vino_transform
+        DESTINATION lib/${PROJECT_NAME})
 
 ament_package()

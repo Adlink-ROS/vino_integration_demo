@@ -29,3 +29,16 @@ cd ~/ros2_openvino_example_ws/src
 source install/local_setup.bash
 ros2 run vino_integration vino_integration
 ```
+
+## detection_objects to string
+
+The ROS 2 node will transform topic `/detected_objects` to String type.
+
+This will be used while bridging ROS 1 since bridge can't transmit topic `/detected_objects`.
+
+```
+# Source ROS 2 dashing and ros2_openvino_toolkit
+cd ~/ros2_openvino_example_ws/src
+source install/local_setup.bash
+ros2 run vino_integration vino_transform
+```
