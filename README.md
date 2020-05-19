@@ -8,7 +8,7 @@ This is a demo repo to show how to utilize object detection of OpenVINO in ROS 2
 * Source ROS 2 dashing and ros2_openvino_toolkit.
 * After source ros2_openvino_toolkit, build code
 ```
-mkdir ~/ros2_openvino_example_ws/src
+mkdir -p ~/ros2_openvino_example_ws/src
 cd ~/ros2_openvino_example_ws/src
 git clone https://github.com/Adlink-ROS/vino_integration_demo
 cd ~/ros2_openvino_example_ws
