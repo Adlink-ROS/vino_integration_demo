@@ -73,7 +73,6 @@ public:
   void pub_cmdvel(int idx)
   {
     geometry_msgs::msg::Twist cmd_vel;
-    //std::cout << __func__<<":"<< __LINE__ <<" cmd_idx = "<< idx << std::endl;
     switch(idx) {
        case CMD_ROTATE_RIGHT:
             cmd_vel.linear.x = 0;
@@ -82,7 +81,6 @@ public:
             cmd_vel.angular.x = 0;
             cmd_vel.angular.y = 0;
             cmd_vel.angular.z = -0.3;
-            //std::cout << __func__<<":"<< __LINE__; 
             std::cout << " Turn right !." << std::endl;
            break;
         case CMD_ROTATE_LEFT:
@@ -92,7 +90,6 @@ public:
             cmd_vel.angular.x = 0;
             cmd_vel.angular.y = 0;
             cmd_vel.angular.z = 0.3;
-            //std::cout << __func__<<":"<< __LINE__;
             std::cout << " Turn left !." << std::endl;
             break;
         default:
@@ -102,12 +99,10 @@ public:
             cmd_vel.angular.x = 0;
             cmd_vel.angular.y = 0;
             cmd_vel.angular.z = 0;
-            //std::cout << __func__<<":"<< __LINE__;
             std::cout << " Stop !." << std::endl;
             break;
 
     }
-    //std::cout << __func__<<":"<< __LINE__ << std::endl;
     to_publish(cmd_vel);
   }
 
@@ -135,7 +130,7 @@ private:
 int main(int argc, char *argv[])
 {
     rclcpp::init(argc, argv);
-    std::cout << "Hello world !!" << std::endl;
+    std::cout << "This is demo for OpenVINO with ROS 2." << std::endl;
     auto topic = std::string("/ros2_openvino_toolkit/detected_objects");
     char * cli_option = rcutils_cli_get_option(argv, argv + argc, "-t");
     if (nullptr != cli_option) {
