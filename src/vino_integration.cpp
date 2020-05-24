@@ -76,8 +76,9 @@ void objDetectCallback(const object_msgs::ObjectsInBoxes::ConstPtr msg)
     }
 }
 
-int main(int argc, char **argv) {
-    printf("subscribe\n");
+int main(int argc, char **argv)
+{
+    printf("This is demo for OpenVINO with ROS 1\n");
     ros::init(argc, argv, "integrator");
     ros::NodeHandle n;
     ros::Subscriber sub = n.subscribe("/ros_openvino_toolkit/detected_objects", 1000, objDetectCallback);
