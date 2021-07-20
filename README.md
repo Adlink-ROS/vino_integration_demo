@@ -10,7 +10,7 @@ This is a demo repo to show how to utilize object detection of OpenVINO in ROS 2
 ```
 mkdir -p ~/ros2_openvino_example_ws/src
 cd ~/ros2_openvino_example_ws/src
-git clone https://github.com/Adlink-ROS/vino_integration_demo
+git clone https://github.com/Adlink-ROS/vino_integration_demo 
 cd ~/ros2_openvino_example_ws
 colcon build --symlink-install
 ```
