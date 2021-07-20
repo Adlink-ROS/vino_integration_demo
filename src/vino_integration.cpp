@@ -28,6 +28,8 @@ enum ACTION
 {
     CMD_ROTATE_RIGHT,
     CMD_ROTATE_LEFT,
+    CMD_ROTATE_FORWARD,
+    CMD_ROTATE_BACKWARD,
 };
 
 class Integrator : public rclcpp::Node
@@ -92,6 +94,24 @@ public:
             cmd_vel.angular.z = 0.3;
             std::cout << " Turn left !." << std::endl;
             break;
+        case CMD_ROTATE_FORWARD:
+            cmd_vel.linear.x = 0.3;
+            cmd_vel.linear.y = 0;
+            cmd_vel.linear.z = 0;
+            cmd_vel.angular.x = 0;
+            cmd_vel.angular.y = 0;
+            cmd_vel.angular.z = 0;
+            std::cout << " Move forward !." << std::endl;
+            break;
+        case CMD_ROTATE_BACKWARD:
+            cmd_vel.linear.x = -0.3;
+            cmd_vel.linear.y = 0;
+            cmd_vel.linear.z = 0;
+            cmd_vel.angular.x = 0;
+            cmd_vel.angular.y = 0;
+            cmd_vel.angular.z = 0;
+            std::cout << " Move backward !." << std::endl;
+            break;
         default:
             cmd_vel.linear.x = 0;
             cmd_vel.linear.y = 0;
@@ -122,8 +142,10 @@ private:
   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr pub_;
   std::map<std::string, int> obj2act =
   {
-      { "person", CMD_ROTATE_RIGHT },
-      { "chair",  CMD_ROTATE_LEFT }
+      { "cat",  CMD_ROTATE_RIGHT    },
+      { "dog",  CMD_ROTATE_LEFT     },
+      { "cow",  CMD_ROTATE_FORWARD  },
+      { "bird", CMD_ROTATE_BACKWARD }
   };
 };
 
