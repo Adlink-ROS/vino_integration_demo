@@ -24,10 +24,10 @@ The ROS 2 node here will transform topic `/detected_objects` from OpenVINO into 
 
 While detecting different animals, the robot will do different actions.
 
-cat: Move right
-dog: Move left
-cow: Move forward
-bird: Move backward
+* cat: Move right
+* dog: Move left
+* cow: Move forward
+* bird: Move backward
 
 ```
 # Run your robot first.
