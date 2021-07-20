@@ -22,7 +22,12 @@ colcon build --symlink-install
 
 The ROS 2 node here will transform topic `/detected_objects` from OpenVINO into `/cmd_vel`.
 
-While seeing person, the robot will turn right. While seeing chair, the robot will turn left.
+While detecting different animals, the robot will do different actions.
+
+cat: Move right
+dog: Move left
+cow: Move forward
+bird: Move backward
 
 ```
 # Run your robot first.
